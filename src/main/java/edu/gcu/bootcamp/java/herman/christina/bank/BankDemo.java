@@ -1,5 +1,7 @@
 package edu.gcu.bootcamp.java.herman.christina.bank;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 import edu.gcu.bootcamp.java.herman.christina.gcucreditunion.Checking;
@@ -9,18 +11,36 @@ public class BankDemo {
 	
 	static Scanner sc = new Scanner(System.in);
 	 
-	private static String name = "GCU Credit Union"; 
+	private String name; 
 
+	SimpleDateFormat day = new SimpleDateFormat("yyyy-MM-dd");
+	Date now = new Date();
+	String currentDay = day.format(now);
+	
+	/**
+	 * get the name
+	 * @return
+	 */
+	public String getName() {
+		return this.name;
+	}
+	/**
+	 * set the name 
+	 * @param name
+	 */
+	public void setName(String name) {
+		this.name= name; 
+	}
 	/**
 	 * print out the methods and interact with the portal
 	 * @param args
 	 */
 	public static void main(String[] args) {
 	Checking check = new Checking(5000.00, "991773");
-	BankDemo bank = new BankDemo(name);
+	BankDemo bank = new BankDemo("GCU Credit Union");
 	Saving save = new Saving(5000., "191923");
 	
-	
+	bank.setName("GCU Credit Union");
 	save.setAnnualInterestRate(.06);
 	save.setMinimumBalance(200.00);
 	save.setServiceFee(25.00);
@@ -117,24 +137,25 @@ public class BankDemo {
 	}
 	
 	private void displayBalanceScreen(Checking checking, Saving saving) {
-		System.out.printf("Your Checking (%s) blance is $%.2f! "
-				+ "\nYour Saving (%s) balance is $%.2f!\n", checking.getAccount(), checking.getBalance(), 
-				saving.getAccount(), saving.getBalance());
+		
+		System.out.printf("Your Checking (%s) blance is $%.2f! On %s "
+				+ "\nYour Saving (%s) balance is $%.2f! On %s \n", checking.getAccount(), checking.getBalance(), currentDay, 
+				saving.getAccount(), saving.getBalance(), currentDay);
 		
 	}
 
 	private void displayWithdrawSavings(Saving saving) {
-		System.out.printf("WITHDRAW FROM SAVINGS (%s) \nYour Savings balance is $%.2f!"
+		System.out.printf("WITHDRAW FROM SAVINGS (%s) \nYour new Savings balance is $%.2f!"
 				+ "\nYou will have a $%.2f service fee if balance is below $%.2f at the end of the month."
-				+ "\nHow much to withdraw : $%.2f\n", saving.getAccount(), saving.getBalance(), saving.getServiceFee(),
-				saving.getMinimumBalance(), saving.doWithdraw());
+				+ "\nHow much to withdraw : $%.2f. On %s.\n", saving.getAccount(), saving.getBalance(), saving.getServiceFee(),
+				saving.getMinimumBalance(), saving.doWithdraw(), currentDay);
 	}
 
 	private void displayWIthdrawChecking(Checking checking) {	
 		System.out.printf("WITHDRAW FROM CHECKING (%s) \nYour Checking balance is $%.2f!"
 				+ "\nYou will have a $%.2f overdarft fee if check amout is greater than the balance."
-				+ "\nHow much to withdraw : $%.2f\n", checking.getAccount(),checking.getBalance(), 
-				checking.getOverDraft(), checking.doWithdraw());
+				+ "\nHow much to withdraw : $%.2f. On %s.\n", checking.getAccount(),checking.getBalance(), 
+				checking.getOverDraft(), checking.doWithdraw(), currentDay);
 		
 	}
 	
@@ -142,14 +163,14 @@ public class BankDemo {
 	private void displayDepositSavings(Saving saving) {
 		double value = saving.doDeposit();
 		System.out.printf("DEPOSIT INTO Savings (%s)\nYour Savings balance is $%.2f!"
-				+ "\nhow much to deposit : $%.2f\n", saving.getAccount(), saving.getBalance(), 
-				value);
+				+ "\nhow much to deposit : $%.2f. On %s.\n", saving.getAccount(), saving.getBalance(), 
+				value, currentDay);
 	}
 	
 	private void displayDepositChecking(Checking checking) {
 		double value = checking.doDeposit();
 		System.out.printf("DEPOSIT INTO checking (%s)\nYour Checking balance is $%.2f!"
-				+ "\nhow much to deposit : $%s\n",checking.getAccount(), checking.getBalance(), value);
+				+ "\nhow much to deposit : $%.2f. On %s.\n",checking.getAccount(), checking.getBalance(), value, currentDay);
 	}
 	
 	/**
