@@ -1,6 +1,7 @@
 package edu.gcu.bootcamp.java.herman.christina.gcucreditunion;
 
 public class Saving extends Account{
+	
 	private double serviceFee;
 	private double annualInterestRate; 
 	private double minimumBalance;
@@ -47,13 +48,42 @@ public class Saving extends Account{
 		this.minimumBalance = minimumBalance;
 	} 
 	/**
-	 * the Constructor for Saving class 
+	 * this method does not return anything it is the end of month claculation for Savings
+	 *
+	 */
+	
+	//here I make sure that the account is above the minimum balance, If it is i gives you interest
+	public void doEndOfMonth() {
+		if(this.getMinimumBalance()> this.getBalance()) {
+			double newBalance = this.getBalance()+ this.getServiceFee();
+			this.setBalance(newBalance); 
+		System.out.println("Calculate end of month items.\nYour account is below the minimum"
+				+ "blalance of " + this.getMinimumBalance() + ".\nYou are being charged a service fee of "
+				+ this.getServiceFee());
+		}
+		else {	
+			double balanceWithInterest = (this.getBalance() * this.getAnnualInterestRate()) + this.getBalance();
+			double interestRate = this.getBalance()* this.getAnnualInterestRate();
+			this.setBalance(balanceWithInterest);
+				
+					System.out.printf("Calculate end of month items.\n"
+					+ "You earned $%.2f of interest on your savings account.\n", this.getAnnualInterestRate() );
+		}
+		
+	}
+	/**
+	 * the Constructor for Saving class  
 	 * @param balance
 	 * @param account
 	 */
-	
-	public Saving(double balance, String account) {}
+	public Saving(Customer customer, double balance, String account) {
+		super(customer);
+		super.setBalance(balance);
+		super.setAccount(account);
 
+		
+	}
+	
 	}
 	
 

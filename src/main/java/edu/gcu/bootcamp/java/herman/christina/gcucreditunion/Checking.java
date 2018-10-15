@@ -23,6 +23,8 @@ public class Checking  extends Account{
 	/**
 	 * withdrawing from the account, including overdraft fees if statement 
 	 */
+	//here I am withdrawing from checking, i made this so that is the balance equals or is below 0 it will add the fee,
+	//if not it will just withdraw
 	
 	public double doWithdraw() {
 		System.out.print("Enter an amount");
@@ -33,12 +35,18 @@ public class Checking  extends Account{
 			System.out.println(newBalance);
 			this.setBalance(newBalance);
 			System.out.printf("\nOVERDRAFT NOTICE: $%.2f fee assesed!\n", this.getOverDraft());
+			TransactionHistory history = new TransactionHistory(java.time.LocalDate.now().toString(), this.getAccount(), Double.toString(this.getBalance()), 
+					Double.toString(amount), this.getClass().getSimpleName());
+			trans.createList(history);	
 		}
 		else {
 			double result = this.getBalance()- amount;
 			this.setBalance(result);
+			TransactionHistory history = new TransactionHistory( java.time.LocalDate.now().toString(), this.getAccount(), Double.toString(this.getBalance()), 
+					Double.toString(amount), this.getClass().getSimpleName());
+			trans.createList(history);
 		}
-		return amount; 
+  		return amount; 
 	
 	}
 	/**
@@ -46,9 +54,12 @@ public class Checking  extends Account{
 	 * @param balance
 	 * @param account
 	 */
+	//here is my constructor for checking you need a customer, blance and account number to create this account) 
 	
-	
-	public Checking(double balance, String account){
+	public Checking(Customer customer, double balance, String account){
+		super(customer);
+		super.setBalance(balance);
+		super.setAccount(account);
 	}
 
 }
