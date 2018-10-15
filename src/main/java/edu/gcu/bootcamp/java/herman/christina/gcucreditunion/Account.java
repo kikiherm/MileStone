@@ -46,15 +46,13 @@ public class Account {
 	 * withdraw from any account
 	 * @return
 	 */
-	public double doWithdraw() {
-		System.out.print("Enter an amount");
-		double amount = sc.nextDouble();
+	public double doWithdraw(double amount) {
 		double result = this.getBalance()- amount;
 		this.setBalance(result);
 		TransactionHistory history = new TransactionHistory(java.time.LocalDate.now().toString(), this.getAccount(), Double.toString(this.getBalance()), 
 				Double.toString(amount), this.getClass().getSimpleName());
 		trans.createList(history);
-		return amount;
+		return result;
 	}
 	/**
 	 * deposit from any account
